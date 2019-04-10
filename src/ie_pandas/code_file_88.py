@@ -9,3 +9,9 @@ class DataFrame():
     # add .sum()
     def sum(self):
         return np.array([self.df[col].sum() for col in self.column_names])
+    def median(self):
+        return np.array([np.median(self.df[col]) for col in self.column_names])
+    def min(self):
+        return np.array([self.df[col].min() for col in self.column_names])
+    def max(self):
+        return np.array([self.df[col].max() for col in self.column_names])
