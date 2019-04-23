@@ -1,5 +1,5 @@
 from .code_file_01 import get_array
-from .code_file_88 import sum,median,min,max
+from .code_file_88 import sum_df,median_df,min_df,max_df
 
 print("Added ...")
 import datetime as dt
@@ -35,3 +35,9 @@ class DataFrame():
         self.df = data_dict
         self.numericals = numeric_cols
         self.non_numericals = not_numeric_cols
+
+    def sum(self):
+        return sum_df(self)
+
+    def median(self):
+        return median_df(self)
