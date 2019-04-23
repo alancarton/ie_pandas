@@ -1,5 +1,4 @@
 
-
 # coding: utf-8
 
 # In[ ]:
@@ -25,3 +24,4 @@ def percentile(self, x):
                 for col in self.column_names
             ]
         )
+
