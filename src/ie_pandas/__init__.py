@@ -41,3 +41,9 @@ class DataFrame():
 
     def median(self):
         return median_df(self)
+
+    def min(self):
+        return min_df(self)
+
+    def max(self):
+        return max_df(self)
