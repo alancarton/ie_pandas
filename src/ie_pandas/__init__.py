@@ -1,5 +1,7 @@
 from .code_file_01 import get_array
 from .code_file_88 import sum_df,median_df,min_df,max_df
+from .code_file_89 import mean as mean_df
+from .code_file_89 import percentile as percentile_df
 
 print("Added ...")
 import datetime as dt
@@ -47,3 +49,9 @@ class DataFrame():
 
     def max(self):
         return max_df(self)
+
+    def mean(self):
+        return mean_df(self)
+
+    def mean(self):
+        return mean_df(self)
