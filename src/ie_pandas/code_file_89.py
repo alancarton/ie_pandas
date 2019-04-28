@@ -25,3 +25,13 @@ def percentile(self):
                 for col in self.column_names
             ]
         )
+
+def unique_element(self):
+    return np.array(
+        [
+            np.unique(self.df[col], return_counts=True)
+            if col in self.numericals
+            else None
+            for col in self.column_names
+        ]
+    )
