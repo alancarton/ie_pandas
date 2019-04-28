@@ -2,6 +2,7 @@ from ie_pandas import DataFrame
 import numpy as np
 import pytest
 
+
 # Updating Test Scripts
 def test_initialization_No_Params():
     with pytest.raises(ValueError) as ValError:

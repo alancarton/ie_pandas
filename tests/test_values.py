@@ -19,7 +19,7 @@ _index = [0, 1, 2, 3, 4]
 
 def test_return_values_01():
 
-    # The Initialization works, so testing that the values function is as expected.
+    # nitialization works, testing that the values function is as expected.
     df = DataFrame(data=_dataarray1, index=_index, columns=_columns)
 
     expected = [

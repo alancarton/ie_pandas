@@ -7,14 +7,15 @@ def _set_data_type(_arr):
     _val = None
     try:
         _val = _arr.astype(np.int)
-    except:
+
+    except ValueError as att_err:
         try:
             _val = _arr.astype(np.float)
-        except:
+        except ValueError as att_err:
             if len(_arr[0]) in [4, 5]:
                 _val = np.array([x == "True" for x in _arr])
             else:
-                # for some reason string list has type as tuple so first element.
+                # string list has type as tuple so first element.
                 _val = _set_string_array(_arr)
     finally:
         return _val
@@ -22,7 +23,7 @@ def _set_data_type(_arr):
 
 def _set_string_array(_arr):
 
-    my_arr = list(_arr.tolist())
+    my_arr = np.array(_arr.tolist())
 
     return my_arr
 
@@ -50,7 +51,7 @@ def return_filtered_columns(data=None, cols=None):
             d1[cols] = data.get(cols)
         else:
             raise ValueError(
-                "Column Number or List", "Column needs to be Integer or Integer list."
+                "Column or List", "Column should be Integer or Integer list."
             )
 
     return d1
@@ -61,7 +62,7 @@ def _array_to_dict(_data, _columns, _transpose=True):
     # if in row format, need to transpose.
 
     _df = None
-    if _transpose == True:
+    if _transpose is True:
         _df = _data.transpose()
     else:
         _df = _data

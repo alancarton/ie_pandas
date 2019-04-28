@@ -1,5 +1,3 @@
-
-
 # coding: utf-8
 
 # In[ ]:
@@ -18,10 +16,12 @@ def mean(self):
 
 
 def percentile(self):
-    for x in [25,50,75]:
+    _df = self.df
+    _nums = self.numericals
+    for x in [25, 50, 75]:
         return np.array(
             [
-                np.percentile(self.df[col], x) if col in self.numericals else None
+                np.percentile(_df[col], x) if col in _nums else None
                 for col in self.column_names
             ]
         )
