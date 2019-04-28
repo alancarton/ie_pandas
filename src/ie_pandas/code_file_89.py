@@ -26,6 +26,7 @@ def percentile(self):
             ]
         )
 
+
 def unique_element(self):
     return np.array(
         [

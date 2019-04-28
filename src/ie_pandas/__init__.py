@@ -6,7 +6,6 @@ from .datamanagement import _array_to_dict, return_filtered_columns
 from .datamanagement import dict_as_arraytable, _set_string_array
 from .datamanagement import _set_data_type
 
-import datetime as dt
 import numpy as np
 
 print("Added ...")
@@ -15,7 +14,7 @@ print("Added ...")
 class DataFrame:
     def __init__(self, data=None, dtype="Row", index=None, columns=None):
 
-        data_dict = None
+        data_dict = {}
 
         if not (data is None):
             if not isinstance(data, dict):
@@ -28,9 +27,9 @@ class DataFrame:
 
                     if columns is None:
                         # columns are keys for Dictionary
-                        columns = np.array(range(_shape[0] - 1))
+                        columns = np.array(range(_shape[0] + 1))
                     if index is None:
-                        index = np.array(range(_shape[1] - 1))
+                        index = np.array(range(_shape[1] + 1))
 
                 else:
                     # Array in column format
@@ -38,9 +37,9 @@ class DataFrame:
 
                     if columns is None:
                         # columns are keys for Dictionary
-                        columns = np.array(range(_shape[1] - 1))
+                        columns = np.array(range(_shape[1] + 1))
                     if index is None:
-                        index = np.array(range(_shape[0] - 1))
+                        index = np.array(range(_shape[0] + 1))
 
                     t_transpose = False
 
@@ -50,10 +49,9 @@ class DataFrame:
                 # Is Dictionary.
                 data_dict = data
         else:
-            raise ValueError(
-                "Invalid Constructor. Use Dictionary or Array!"
-            )
+            raise ValueError("Invalid Constructor. Use Dictionary or Array!")
 
+        # Now that data is in common format, store it properly
         if not (data_dict is None):
             numeric_cols = []
             not_numeric_cols = []
@@ -69,23 +67,20 @@ class DataFrame:
                 else:
                     not_numeric_cols.append(key)
 
-            self.column_names = [*data_dict.keys()]
             self.df = data_dict
+            self.column_names = [*data_dict.keys()]
             self.numericals = numeric_cols
             self.non_numericals = not_numeric_cols
 
             if index is None:
-                my_index = np.array(
-                    range(len(data_dict.get(list(data_dict.keys())[0])))
-                )
+                _key = self.column_names[0]
+                my_index = np.array(range(len(self.df.get(_key))))
             else:
                 my_index = index
 
-            self.index_names = my_index
+            self.index = my_index
         else:
-            raise ValueError(
-                "Invalid Constructor. Use Dictionary or Array!"
-            )
+            raise ValueError("Invalid Constructor. Use Dictionary or Array!")
 
     def values(self, colnames=None):
         _df = None
@@ -106,11 +101,25 @@ class DataFrame:
 
             _df = return_filtered_columns(self.df, cols=_cols)
 
+        return _df
+
+    @property
+    def data(self):
+        _df = self.df
+        return _df
+
+    @data.setter
+    def data(self, value):
+        self.df = value
+
+    def to_array(self, colnames=None):
+        _df = self.values(colnames)
+
         return dict_as_arraytable(_df)
 
     def __repr__(self):
 
-        return str(self.values())
+        return str(self.data())
 
     def __str__(self):
         return "ie-pandas DataFrame"
@@ -143,6 +152,19 @@ class DataFrame:
         except Exception as ex:
             log_traceback(ex)
 
+    @columns.setter
+    def columns(self, value):
+
+        d = self.data
+        d1 = {}
+        new_key = 0
+        for key in d.keys():
+            d1[value[new_key]] = d.get(key)
+            new_key += 1
+
+        self.data = d1
+        self.column_names = value
+
     @property
     def index(self):
 
@@ -152,6 +174,10 @@ class DataFrame:
             return lst_rows
         except Exception as ex:
             log_traceback(ex)
+
+    @index.setter
+    def index(self, value):
+        self.index_names = value
 
     def get_col_numbers(self, _columns):
         _arr = []
