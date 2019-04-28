@@ -19,7 +19,7 @@ _index = [0, 1, 2, 3, 4]
 
 def test_return_values_01():
 
-    # nitialization works, testing that the values function is as expected.
+    # itialization works, testing that the values function is as expected.
     df = DataFrame(data=_dataarray1, index=_index, columns=_columns)
 
     expected = [
@@ -30,4 +30,4 @@ def test_return_values_01():
         ["12", "41.0", "True", "R5"],
     ]
 
-    assert np.array_equal(df.values(), expected)
+    assert np.array_equal(df.to_array(), expected)
