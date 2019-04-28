@@ -61,7 +61,7 @@ def _array_to_dict(_data, _columns, _transpose=True):
     # if in row format, need to transpose.
 
     _df = None
-    if _transpose == True:
+    if _transpose is True:
         _df = _data.transpose()
     else:
         _df = _data
