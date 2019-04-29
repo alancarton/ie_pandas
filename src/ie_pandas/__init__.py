@@ -89,12 +89,12 @@ class DataFrame:
             # Return all columns
             _df = self.df
         else:
-            if not isinstance(colnames[0], np.ndarray):
-                colnames = np.array(colnames)
-            if isinstance(colnames[0], list):
+            # Colnames needs to be an array.
+            if not isinstance(colnames, np.ndarray):
                 colnames = np.array(colnames)
 
-            if type(colnames[0]) is str:
+            if not type(colnames[0]) is str:
+                # Numeric list, so get list as column names.
                 _cols = get_columnnames_by_numbers(colnames)
             else:
                 _cols = colnames
