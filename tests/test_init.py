@@ -6,10 +6,8 @@ import pytest
 # Updating Test Scripts
 def test_initialization_No_Params():
     with pytest.raises(ValueError) as ValError:
-        df = DataFrame()
         # Error on Object Generation so Fail.  Data needed
-
-        assert "InvalidConstructor" in str(ValError.value)
+        df = DataFrame()
 
 
 def test_initialization_array_param():
@@ -40,7 +38,7 @@ def test_initialization_array_param():
 def test_initialization_array_dict():
     _data = {
         "value1": [1, 2, 3, 4, 5, 6],
-        "value2": [2, 2, 2, 2, 2, 2],
+        "value2": [True, False, False, True, True, True],
         "value3": [1.1, 2.2, 3.3, 4.4, 5.5, 6.6],
         "value4": ["a", "b", "c", "d", "e", "f"],
     }
