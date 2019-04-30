@@ -25,17 +25,13 @@ def test_initialization_array_param():
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
     _index = [0, 1, 2, 3, 4]
 
-    try:
-        df = DataFrame(data=_data, index=_index, columns=_columns)
-        # Object Created so Pass Test.
-        assert True
-
-    except ValueError as Error:
-        # Error on Object Generation so Fail
-        assert False
+    df = DataFrame(data=_data, index=_index, columns=_columns)
+    # Object Created so Pass Test.
+    assert True
 
 
 def test_initialization_array_dict():
+
     _data = {
         "value1": [1, 2, 3, 4, 5, 6],
         "value2": [True, False, False, True, True, True],
@@ -43,10 +39,6 @@ def test_initialization_array_dict():
         "value4": ["a", "b", "c", "d", "e", "f"],
     }
 
-    try:
-        df = DataFrame(data=_data)
+    df = DataFrame(data=_data)
 
-        assert True
-    except ValueError as Error:
-
-        assert False
+    assert True
