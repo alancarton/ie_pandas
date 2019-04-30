@@ -1,7 +1,3 @@
-from .code_file_01 import get_array
-from .code_file_88 import sum_df, median_df, min_df, max_df, _hist, _boxplot
-from .code_file_89 import mean as mean_df
-from .code_file_89 import percentile as percentile_df
 from .datamanagement import _array_to_dict, return_filtered_columns
 from .datamanagement import dict_as_arraytable, _set_string_array
 from .datamanagement import _set_data_type
@@ -82,6 +78,9 @@ class DataFrame:
         else:
             raise ValueError("Invalid Constructor. Use Dictionary or Array!")
 
+    def get_array(param_array):
+        print(param_array)
+
     def values(self, colnames=None):
         _df = None
         _cols = self.columns
@@ -102,25 +101,6 @@ class DataFrame:
             _df = return_filtered_columns(self.df, cols=_cols)
 
         return _df
-
-    def get_row(self, rowindex=None):
-        data = self.data
-
-        if rowindex is None:
-            raise ValueError("Must specify row index.")
-
-        if not isinstance(rowindex, int):
-            raise TypeError("Row index must be an integer.")
-
-        if abs(rowindex) > len(data):
-            raise ValueError("Row index out of range")
-
-        d_temp = {}
-
-        for key in data.keys():
-            d_temp[key] = data.get(key)[rowindex]
-
-        return list(d_temp.values())
 
     @property
     def data(self):
@@ -143,23 +123,85 @@ class DataFrame:
     def __str__(self):
         return "ie-pandas DataFrame"
 
+    # Define standard metrics
     def sum(self):
-        return sum_df(self)
+        return np.array(
+            [
+                self.df[col].sum() if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
 
     def median(self):
-        return median_df(self)
+        return np.array(
+            [
+                np.median(self.df[col]) if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
 
     def min(self):
-        return min_df(self)
+        return np.array(
+            [
+                self.df[col].min() if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
 
     def max(self):
-        return max_df(self)
+        return np.array(
+            [
+                self.df[col].max() if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
+
+    def std(self):
+        return np.array(
+            [
+                self.df[col].std() if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
 
     def mean(self):
-        return mean_df(self)
+        return np.array(
+            [
+                np.mean(self.df[col]) if col in self.numericals else None
+                for col in self.column_names
+            ]
+        )
 
     def percentile(self):
-        return percentile_df(self)
+        _df = self.df
+        _nums = self.numericals
+        for x in [25, 50, 75]:
+            return np.array(
+                [
+                    np.percentile(_df[col], x) if col in _nums else None
+                    for col in self.column_names
+                ]
+            )
+
+    # Further functionality
+    def get_row(self, rowindex=None):
+        data = self.data
+
+        if rowindex is None:
+            raise ValueError("Must specify row index.")
+
+        if not isinstance(rowindex, int):
+            raise TypeError("Row index must be an integer.")
+
+        if abs(rowindex) > len(data):
+            raise ValueError("Row index out of range")
+
+        d_temp = {}
+
+        for key in data.keys():
+            d_temp[key] = data.get(key)[rowindex]
+
+        return list(d_temp.values())
 
     @property
     def columns(self):
@@ -254,8 +296,59 @@ class DataFrame:
             rtn_ = self.iloc[_row, _col]
         return rtn_
 
-    def hist(self):
-        return _hist(self)
+    # Visualisation
+    def _hist(self, cols=[], bins=None, histtype="bar", color=None, rwidth=0.9):
+        """
+        bins : int or sequence or str, optional
+        histtype : {'bar', 'barstacked', 'step', 'stepfilled'}, optional
+        color : color or array_like of colors or None, optional
+        rwidth : scalar or None, optional
+        """
+        if not isinstance(cols, (list,)):
+            raise ValueError("The argument cols must be empty or a list")
 
-    def boxplot(self):
-        return _boxplot(self)
+        def draw_hist(nums):
+            fig1, ax1 = plt.subplots()
+            ax1.set_title(nums)
+            ax1.hist(
+                self.df[nums], bins=bins, histtype=histtype, color=color, rwidth=rwidth
+            )
+
+        if not cols:
+            for nums in self.numericals:
+                draw_hist(nums)
+
+        else:
+            for nums in cols:
+                if nums in self.numericals:
+                    draw_hist(nums)
+                else:
+                    print(
+                        f"Not able to plot the column: {nums} because it's not a numerical feature."
+                    )
+
+    def _boxplot(self, cols=[], vert=True, meanline=False):
+        """
+        vert : bool, optional (True)
+        meanline : bool, optional (False)
+        """
+        if not isinstance(cols, (list,)):
+            raise ValueError("The argument cols must be empty or a list")
+
+        def draw_box(nums):
+            fig1, ax1 = plt.subplots()
+            ax1.set_title(nums)
+            ax1.boxplot(self.df[nums], vert=vert, meanline=meanline)
+
+        if not cols:
+            for nums in self.numericals:
+                draw_box(nums)
+
+        else:
+            for nums in cols:
+                if nums in self.numericals:
+                    draw_box(nums)
+                else:
+                    print(
+                        f"Not able to plot the column: {nums} because it's not a numerical feature."
+                    )
