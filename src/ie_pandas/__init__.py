@@ -1,11 +1,11 @@
 from .code_file_01 import get_array
-from .code_file_88 import sum_df, median_df, min_df, max_df
+from .code_file_88 import sum_df, median_df, min_df, max_df, _hist, _boxplot
 from .code_file_89 import mean as mean_df
 from .code_file_89 import percentile as percentile_df
 from .datamanagement import _array_to_dict, return_filtered_columns
 from .datamanagement import dict_as_arraytable, _set_string_array
 from .datamanagement import _set_data_type
-
+import matplotlib.pyplot as plt
 import numpy as np
 
 print("Added ...")
@@ -253,3 +253,9 @@ class DataFrame:
             _col = self.col(colname)
             rtn_ = self.iloc[_row, _col]
         return rtn_
+
+    def hist(self):
+        return _hist(self)
+
+    def boxplot(self):
+        return _boxplot(self)
