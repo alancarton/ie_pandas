@@ -103,6 +103,25 @@ class DataFrame:
 
         return _df
 
+    def get_row(self, rowindex=None):
+        data = self.data
+
+        if rowindex is None:
+            raise ValueError("Must specify row index.")
+
+        if not isinstance(rowindex, int):
+            raise TypeError("Row index must be an integer.")
+
+        if abs(rowindex) > len(data):
+            raise ValueError("Row index out of range")
+
+        d_temp = {}
+
+        for key in data.keys():
+            d_temp[key] = data.get(key)[rowindex]
+
+        return list(d_temp.values())
+
     @property
     def data(self):
         _df = self.df
