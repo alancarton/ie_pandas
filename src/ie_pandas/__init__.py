@@ -236,7 +236,7 @@ class DataFrame:
         return rtn_
 
     def hist(self):
-        return _hist
+        return _hist(self)
 
     def boxplot(self):
-        return _boxplot
+        return _boxplot(self)
