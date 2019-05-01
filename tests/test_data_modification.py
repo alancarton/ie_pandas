@@ -16,8 +16,7 @@ _data = np.array(
 def test_check_value():
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
-    dframe = DataFrame(data=_data, index=_index, columns=_columns)
+    dframe = DataFrame(data=_data, columns=_columns)
     df = dframe.df
     # set the value
     expectedval = 4.123
@@ -28,8 +27,7 @@ def test_check_value():
 def test_check_set_value():
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
-    dframe = DataFrame(data=_data, index=_index, columns=_columns)
+    dframe = DataFrame(data=_data, columns=_columns)
     df = dframe.df
 
     # set the value
@@ -42,8 +40,7 @@ def test_check_set_value():
 def test_check_set_None():
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
-    dframe = DataFrame(data=_data, index=_index, columns=_columns)
+    dframe = DataFrame(data=_data, columns=_columns)
     df = dframe.df
 
     # set the value
@@ -56,8 +53,7 @@ def test_check_set_None():
 def test_check_set_columns():
 
     _columns = ["1", "2", "3", "4"]
-    _index = [0, 1, 2, 3, 4]
-    dframe = DataFrame(data=_data, index=_index, columns=_columns)
+    dframe = DataFrame(data=_data, columns=_columns)
     _new_columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
 
     # Get the current value of second column "2"
@@ -72,8 +68,7 @@ def test_check_set_columns():
 def test_set_value_():
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
-    df = DataFrame(data=_data, index=_index, columns=_columns)
+    df = DataFrame(data=_data, columns=_columns)
     # This should fail, as cannot assign String to Int Column
     # Bool will convert to 1 for numeric. Float will round to integer.
     with pytest.raises(ValueError) as ValError:
