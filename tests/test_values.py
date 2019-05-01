@@ -12,7 +12,6 @@ _dataarray1 = np.array(
 )
 
 _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-# _columns=None
 
 
 def test_return_values_01():
