@@ -9,7 +9,23 @@ print("Added ...")
 
 class DataFrame:
     def __init__(self, data=None, dtype="Row", index=None, columns=None):
+        """
+		DataFrame Class created to mimic some of the functions of Pandas.
+    Either form is acceptable, but the two should not be mixed. Choose one
+    convention to document the __init__ method and be consistent with it.
 
+    Note:
+        Do not include the `self` parameter in the ``Args`` section.
+
+    Args:
+        data
+        code (:obj:`int`, optional): Error code.
+
+    Attributes:
+        msg (str): Human readable string describing the exception.
+        code (int): Exception error code.
+		
+        """
         data_dict = {}
 
         if not (data is None):
@@ -143,7 +159,7 @@ class DataFrame:
         return "ie-pandas DataFrame"
 
 	# Basic metrics
-    def sum_df(self):
+    def sum(self):
         return np.array(
             [
                 self.df[col].sum() if col in self.numericals else None
@@ -152,7 +168,7 @@ class DataFrame:
         )
 
 
-    def median_df(self):
+    def median(self):
         return np.array(
             [
                 np.median(self.df[col]) if col in self.numericals else None
@@ -161,7 +177,7 @@ class DataFrame:
         )
 
 
-    def min_df(self):
+    def min(self):
         return np.array(
             [
                 self.df[col].min() if col in self.numericals else None
@@ -170,7 +186,7 @@ class DataFrame:
         )
 
 
-    def max_df(self):
+    def max(self):
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
