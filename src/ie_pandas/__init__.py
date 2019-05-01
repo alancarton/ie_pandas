@@ -300,7 +300,7 @@ class DataFrame:
             rtn_ = self.iloc[_row, _col]
         return rtn_
 
-    def _hist(self, cols=[], bins=None, histtype="bar", color=None, rwidth=0.9):
+    def _hist(self, cols=[], bins=None, color=None, rwidth=0.9):
         """
         bins : int or sequence or str, optional
         histtype : {'bar', 'barstacked', 'step', 'stepfilled'}, optional
@@ -314,7 +314,7 @@ class DataFrame:
             fig1, ax1 = plt.subplots()
             ax1.set_title(nums)
             ax1.hist(
-                self.df[nums], bins=bins, histtype=histtype, color=color, rwidth=rwidth
+                self.df[nums], bins=bins, color=color, rwidth=rwidth
             )
 
         if not cols:
@@ -327,12 +327,12 @@ class DataFrame:
                     draw_hist(nums)
                 else:
                     print(
-                        f"Not able to plot the column: {nums} because it's not a numerical feature."
+                        f"column: {nums} must be numerical."
                     )
 
     def unique_element(self):
         return np.array(
-            [np.unique(self.df[col], return_counts=True) for col in self.column_names]
+            [np.unique(self.df[col]) for col in self.column_names]
         )
 
     def _boxplot(self, cols=[], vert=True, meanline=False):
@@ -358,5 +358,5 @@ class DataFrame:
                     draw_box(nums)
                 else:
                     print(
-                        f"Not able to plot the column: {nums} because it's not a numerical feature."
+                        f"column: {nums} must be numerical."
                     )
