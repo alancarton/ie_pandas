@@ -23,14 +23,13 @@ def test_initialization_array_param():
     )
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
 
-    df = DataFrame(data=_data, index=_index, columns=_columns)
+    df = DataFrame(data=_data, columns=_columns)
     # Object Created so Pass Test.
     assert True
 
 
-def test_initialization_array_dict():
+def test_initialization_dict():
 
     _data = {
         "value1": [1, 2, 3, 4, 5, 6],
@@ -41,4 +40,21 @@ def test_initialization_array_dict():
 
     df = DataFrame(data=_data)
 
+    assert True
+
+
+def test_initialization_array_no_columns():
+
+    _data = np.array(
+        [
+            [1, 1.3254, False, "R1"],
+            [3, 4.123, True, "R 2"],
+            [3, 1.4, False, "R 3"],
+            [2, 14, False, "R 4"],
+            [12, 41, True, "R5"],
+        ]
+    )
+
+    df = DataFrame(data=_data)
+    # Object Created so Pass Test.
     assert True

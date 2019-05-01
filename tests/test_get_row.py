@@ -18,9 +18,8 @@ def test_getrow():
     )
 
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-    _index = [0, 1, 2, 3, 4]
 
-    df = DataFrame(data=_data, index=_index, columns=_columns)
+    df = DataFrame(data=_data, columns=_columns)
     row = 3
     expected_output = [2, 14.0, False, "R 4"]
     output = df.get_row(row)
@@ -46,7 +45,7 @@ def test_get_negative_row():
     _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
     _index = [0, 1, 2, 3, 4]
 
-    df = DataFrame(data=_data, index=_index, columns=_columns)
+    df = DataFrame(data=_data, columns=_columns)
     row = -1
     expected_output = [12, 41.0, True, "R5"]
     output = df.get_row(row)
@@ -74,7 +73,7 @@ def test_get_row_no_params():
         _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
         _index = [0, 1, 2, 3, 4]
 
-        df = DataFrame(data=_data, index=_index, columns=_columns)
+        df = DataFrame(data=_data, columns=_columns)
 
         output = df.get_row()
 
@@ -99,7 +98,7 @@ def test_get_row_out_of_range():
         _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
         _index = [0, 1, 2, 3, 4]
 
-        df = DataFrame(data=_data, index=_index, columns=_columns)
+        df = DataFrame(data=_data, columns=_columns)
         row = 5
 
         output = df.get_row(row)
@@ -125,7 +124,7 @@ def test_get_row_string_rowkey():
         _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
         _index = [0, 1, 2, 3, 4]
 
-        df = DataFrame(data=_data, index=_index, columns=_columns)
+        df = DataFrame(data=_data, columns=_columns)
 
         # Specify string as row index
         row = "a"

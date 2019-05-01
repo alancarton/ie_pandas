@@ -12,15 +12,13 @@ _dataarray1 = np.array(
 )
 
 _columns = ["IntCol", "FloatCol", "BoolCol", "StringCol"]
-_index = [0, 1, 2, 3, 4]
-# _index=None
 # _columns=None
 
 
 def test_return_values_01():
 
     # itialization works, testing that the values function is as expected.
-    df = DataFrame(data=_dataarray1, index=_index, columns=_columns)
+    df = DataFrame(data=_dataarray1, columns=_columns)
 
     expected = [
         ["1", "1.3254", "False", "R1"],
