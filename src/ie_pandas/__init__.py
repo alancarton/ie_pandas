@@ -147,7 +147,7 @@ class DataFrame:
     def __str__(self):
         return "ie-pandas DataFrame"
 
-    # Basic metrics
+	  # Basic metrics
     def sum(self):
         return np.array(
             [
@@ -171,7 +171,7 @@ class DataFrame:
                 for col in self.column_names
             ]
         )
-
+    
     def max(self):
         return np.array(
             [
@@ -204,6 +204,13 @@ class DataFrame:
             [
                 self.df[col].std() if col in self.numericals else None
                 for col in self.column_names
+            ]
+        )
+
+    def unique_element(self):
+        return np.array(
+            [
+                np.unique(self.df[col]) for col in self.column_names
             ]
         )
 
