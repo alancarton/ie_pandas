@@ -224,6 +224,13 @@ class DataFrame:
             ]
         )
 
+    def unique_element(self):
+        return np.array(
+            [
+                np.unique(self.df[col]) for col in self.column_names
+            ]
+        )
+
     @property
     def columns(self):
 
