@@ -8,9 +8,9 @@ print("Added ...")
 
 
 class DataFrame:
-    def __init__(self, data=None, dtype="Row", index=None, columns=None):
+    def __init__(self, data=None, dtype="Row", columns=None):
         """
-		DataFrame Class created to mimic some of the functions of Pandas.
+    DataFrame Class created to mimic some of the functions of Pandas.
     Either form is acceptable, but the two should not be mixed. Choose one
     convention to document the __init__ method and be consistent with it.
 
@@ -24,7 +24,7 @@ class DataFrame:
     Attributes:
         msg (str): Human readable string describing the exception.
         code (int): Exception error code.
-		
+
         """
         data_dict = {}
 
@@ -39,9 +39,7 @@ class DataFrame:
 
                     if columns is None:
                         # columns are keys for Dictionary
-                        columns = np.array(range(_shape[0] + 1))
-                    if index is None:
-                        index = np.array(range(_shape[1] + 1))
+                        columns = np.array(range(_shape[1]))
 
                 else:
                     # Array in column format
@@ -49,9 +47,7 @@ class DataFrame:
 
                     if columns is None:
                         # columns are keys for Dictionary
-                        columns = np.array(range(_shape[1] + 1))
-                    if index is None:
-                        index = np.array(range(_shape[0] + 1))
+                        columns = np.array(range(_shape[0]))
 
                     t_transpose = False
 
@@ -84,13 +80,6 @@ class DataFrame:
             self.numericals = numeric_cols
             self.non_numericals = not_numeric_cols
 
-            if index is None:
-                _key = self.column_names[0]
-                my_index = np.array(range(len(self.df.get(_key))))
-            else:
-                my_index = index
-
-            self.index = my_index
         else:
             raise ValueError("Invalid Constructor. Use Dictionary or Array!")
 
@@ -158,7 +147,7 @@ class DataFrame:
     def __str__(self):
         return "ie-pandas DataFrame"
 
-	# Basic metrics
+    # Basic metrics
     def sum(self):
         return np.array(
             [
@@ -166,7 +155,6 @@ class DataFrame:
                 for col in self.column_names
             ]
         )
-
 
     def median(self):
         return np.array(
@@ -176,7 +164,6 @@ class DataFrame:
             ]
         )
 
-
     def min(self):
         return np.array(
             [
@@ -184,7 +171,6 @@ class DataFrame:
                 for col in self.column_names
             ]
         )
-
 
     def max(self):
         return np.array(
@@ -194,8 +180,6 @@ class DataFrame:
             ]
         )
 
-
-
     def mean(self):
         return np.array(
             [
@@ -203,7 +187,6 @@ class DataFrame:
                 for col in self.column_names
             ]
         )
-
 
     def percentile(self):
         _df = self.df
@@ -347,6 +330,10 @@ class DataFrame:
                         f"Not able to plot the column: {nums} because it's not a numerical feature."
                     )
 
+    def unique_element(self):
+        return np.array(
+            [np.unique(self.df[col], return_counts=True) for col in self.column_names]
+        )
 
     def _boxplot(self, cols=[], vert=True, meanline=False):
         """
