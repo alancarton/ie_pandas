@@ -10,21 +10,20 @@ print("Added ...")
 class DataFrame:
     def __init__(self, data=None, dtype="Row", columns=None):
         """
-    DataFrame Class created to mimic some of the functions of Pandas.
-    Either form is acceptable, but the two should not be mixed. Choose one
-    convention to document the __init__ method and be consistent with it.
-
-    Note:
-        Do not include the `self` parameter in the ``Args`` section.
-
-    Args:
-        data
-        code (:obj:`int`, optional): Error code.
-
-    Attributes:
-        msg (str): Human readable string describing the exception.
-        code (int): Exception error code.
-
+        ie_pandas DataFrame
+        Some functionality implemented to mimic Pandas DataFrame.
+        Will throw error on Creation if created as DataFrame()
+        Args:
+            data [Required: Dictionary or Array of Data]
+            data as Dictionary :
+                    Columns as keys.
+                    Data Values as array of data of same type
+                data as Array :
+                    array format can be by row or column in array.
+                    dtype [Optional for Array Data: ("Row" / "Col")
+                        Default is "Row"
+                    columns [Optional: (Array of columns.
+                        If missing uses [0, 1, 2 ... etc]) ]
         """
         data_dict = {}
 
@@ -84,6 +83,12 @@ class DataFrame:
             raise ValueError("Invalid Constructor. Use Dictionary or Array!")
 
     def values(self, colnames=None):
+        """
+        values: Returns values as dictionary.
+        args:
+            colnames: List of column names [Optional].
+                If omitted returns all columns for data in the order specified.
+        """
         _df = None
         _cols = self.columns
         if colnames is None:
@@ -105,6 +110,13 @@ class DataFrame:
         return _df
 
     def get_row(self, rowindex=None):
+        """
+	get_row: Returns row as a list of values.
+	args:
+                rowindex: Zero-based index of row to be returned.
+		In case a negative index is provided, will count
+		backwards from the last row.
+	"""
         data = self.data
 
         if rowindex is None:
@@ -116,25 +128,42 @@ class DataFrame:
         if abs(rowindex) > len(data):
             raise ValueError("Row index out of range")
 
-        d_temp = {}
+        # Create empty dictionary and add in elements of desired row.
 
+        d_temp = {}
         for key in data.keys():
             d_temp[key] = data.get(key)[rowindex]
 
+        # Return result as list
         return list(d_temp.values())
 
     @property
     def data(self):
+        """
+        data: Property: Returns DataFrame data as Dictionary.
+              No parameters required.
+        args: None
+        """
         _df = self.df
         return _df
 
     @data.setter
     def data(self, value):
+        """
+        data: Property: Sets DataFrame data as Dictionary.
+              No parameters required.
+        args: None
+        """
         self.df = value
 
     def to_array(self, colnames=None):
+        """
+        to_array: Returns Data Values for DataFrame array.
+        args:     colnames: Array of Column names [Optional]
+                    will default to all columns if missing.
+                    Will return the data as an array in the order specified.
+        """
         _df = self.values(colnames)
-
         return dict_as_arraytable(_df)
 
     def __repr__(self):
@@ -146,6 +175,11 @@ class DataFrame:
 
     # Basic metrics
     def sum(self):
+        """
+        sum:    Returns array with the sum of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].sum() if col in self.numericals else None
@@ -154,6 +188,11 @@ class DataFrame:
         )
 
     def median(self):
+        """
+        median: Returns array with the median of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 np.median(self.df[col]) if col in self.numericals else None
@@ -162,6 +201,11 @@ class DataFrame:
         )
 
     def min(self):
+        """
+        min:    Returns array with the minimum value of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].min() if col in self.numericals else None
@@ -170,6 +214,11 @@ class DataFrame:
         )
 
     def max(self):
+        """
+        max:    Returns array with the maximum value of each numeric column.
+                No parameters required.
+        args:   None
+        """      
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
@@ -178,6 +227,11 @@ class DataFrame:
         )
 
     def mean(self):
+        """
+        mean:   Returns array with the mean of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 np.mean(self.df[col]) if col in self.numericals else None
@@ -186,6 +240,12 @@ class DataFrame:
         )
 
     def percentile(self):
+        """
+        percentile: Returns array with the 0.25, 0.5 and 0.75
+                    percentiles of each numeric column.
+                    No parameters required.
+        args:       None
+        """
         _df = self.df
         _nums = self.numericals
         for x in [25, 50, 75]:
@@ -197,6 +257,11 @@ class DataFrame:
             )
 
     def std(self):
+        """
+        std:    Returns array with the standard deviation of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].std() if col in self.numericals else None
@@ -209,7 +274,10 @@ class DataFrame:
 
     @property
     def columns(self):
-
+        """
+            columns: Returns the list of columns for the DataFrame.
+            args:    None.
+        """
         lst_cols = -1
         try:
             lst_cols = list(self.column_names)
@@ -219,7 +287,11 @@ class DataFrame:
 
     @columns.setter
     def columns(self, value):
-
+        """
+            columns:	Sets the list of columns for the DataFrame
+            args:		value: Column List as array.
+        """
+        # Rebuilds the data dictionary using the new value as keys.
         d = self.data
         d1 = {}
         new_key = 0
@@ -230,7 +302,6 @@ class DataFrame:
         self.data = d1
         self.column_names = value
 
-    @property
     def index(self):
 
         lst_rows = -1
@@ -243,6 +314,62 @@ class DataFrame:
     @index.setter
     def index(self, value):
         self.index_names = value
+
+    def get_col_numbers(self, _columns):
+        _arr = []
+
+        _columncheck = self.column_names
+
+        for _colcheck in _columncheck:
+            int_col = 0
+            for _col in _columns:
+                if _colcheck == _col:
+                    _arr.append(int_col)
+                int_col += 1
+
+        return _arr
+
+    def icol(self, cols=None):
+        # Unsure if this works ...
+        _keys = list(self.df.keys())
+        _df = self.df
+        if cols is not None:
+            d1 = {}
+            if isinstance(cols, list):
+                for col in cols:
+                    d1[_keys[col]] = _df.get(_keys[col])
+            elif isinstance(cols, int):
+                d1[_keys[cols]] = _df.get(_keys[cols])
+            else:
+                raise ValueError(
+                    "Column Number or List",
+                    "Column needs to be Integer or Integer list.",
+                )
+        return np.array(d1.items())
+
+    def row(self, rowname):
+        return self.columns.index(rowname)
+
+    def ___col_by_names(self, cols):
+
+        _arr = self.get_col_numbers(self.column_names, cols)
+        return self.icol(_arr)
+
+    def loc(self, rowname, colname):
+        rtn_ = None
+        if (rowname is None) and (colname is None):
+            rtn_ = self.iloc[:, :]
+        elif col is None:
+            _row = self.row(self, rowname)
+            rtn_ = self.iloc[_row, :]
+        elif row is None:
+            _col = self.col(self, colname)
+            rtn_ = self.iloc[:, _col]
+        else:
+            _row = self.row(rowname)
+            _col = self.col(colname)
+            rtn_ = self.iloc[_row, _col]
+        return rtn_
 
     def _hist(self, cols=[], bins=None, color=None, rwidth=0.9):
         """
@@ -269,6 +396,9 @@ class DataFrame:
                     draw_hist(nums)
                 else:
                     print(f"column: {nums} must be numerical.")
+
+    def unique_element(self):
+        return np.array([np.unique(self.df[col]) for col in self.column_names])
 
     def _boxplot(self, cols=[], vert=True, meanline=False):
         """
