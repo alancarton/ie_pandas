@@ -110,6 +110,13 @@ class DataFrame:
         return _df
 
     def get_row(self, rowindex=None):
+        """
+	get_row: Returns row as a list of values.
+	args:
+                rowindex: Zero-based index of row to be returned.
+		In case a negative index is provided, will count
+		backwards from the last row.
+	"""
         data = self.data
 
         if rowindex is None:
@@ -121,11 +128,13 @@ class DataFrame:
         if abs(rowindex) > len(data):
             raise ValueError("Row index out of range")
 
-        d_temp = {}
+        # Create empty dictionary and add in elements of desired row.
 
+        d_temp = {}
         for key in data.keys():
             d_temp[key] = data.get(key)[rowindex]
 
+        # Return result as list
         return list(d_temp.values())
 
     @property
@@ -166,6 +175,11 @@ class DataFrame:
 
     # Basic metrics
     def sum(self):
+        """
+        sum:    Returns array with the sum of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].sum() if col in self.numericals else None
@@ -174,6 +188,11 @@ class DataFrame:
         )
 
     def median(self):
+        """
+        median: Returns array with the median of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 np.median(self.df[col]) if col in self.numericals else None
@@ -182,6 +201,11 @@ class DataFrame:
         )
 
     def min(self):
+        """
+        min:    Returns array with the minimum value of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].min() if col in self.numericals else None
@@ -190,6 +214,11 @@ class DataFrame:
         )
 
     def max(self):
+        """
+        max:    Returns array with the maximum value of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
@@ -198,6 +227,11 @@ class DataFrame:
         )
 
     def mean(self):
+        """
+        mean:   Returns array with the mean of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 np.mean(self.df[col]) if col in self.numericals else None
@@ -206,6 +240,12 @@ class DataFrame:
         )
 
     def percentile(self):
+        """
+        percentile: Returns array with the 0.25, 0.5 and 0.75
+                    percentiles of each numeric column.
+                    No parameters required.
+        args:       None
+        """
         _df = self.df
         _nums = self.numericals
         for x in [25, 50, 75]:
@@ -217,6 +257,11 @@ class DataFrame:
             )
 
     def std(self):
+        """
+        std:    Returns array with the standard deviation of each numeric column.
+                No parameters required.
+        args:   None
+        """
         return np.array(
             [
                 self.df[col].std() if col in self.numericals else None
