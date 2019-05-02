@@ -111,12 +111,12 @@ class DataFrame:
 
     def get_row(self, rowindex=None):
         """
-	get_row: Returns row as a list of values.
-	args:
-                rowindex: Zero-based index of row to be returned.
-		In case a negative index is provided, will count
-		backwards from the last row.
-	"""
+        get_row: Returns row as a list of values.
+        args:
+                 rowindex: Zero-based index of row to be returned.
+        In case a negative index is provided, will count
+        backwards from the last row.
+        """
         data = self.data
 
         if rowindex is None:
@@ -154,7 +154,8 @@ class DataFrame:
               No parameters required.
         args: None
         """
-        self.df = value
+        _df = DataFrame(value)
+        self.df = _df.data
 
     def to_array(self, colnames=None):
         """
@@ -218,7 +219,7 @@ class DataFrame:
         max:    Returns array with the maximum value of each numeric column.
                 No parameters required.
         args:   None
-        """      
+        """
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
@@ -258,7 +259,7 @@ class DataFrame:
 
     def std(self):
         """
-        std:    Returns array with the standard deviation of each numeric column.
+        std:    Returns array with standard deviation of numeric columns.
                 No parameters required.
         args:   None
         """
