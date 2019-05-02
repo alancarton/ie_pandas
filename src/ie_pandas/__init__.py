@@ -168,7 +168,7 @@ class DataFrame:
 
     def __repr__(self):
 
-        return str(self.data())
+        return str(self.data)
 
     def __str__(self):
         return "ie-pandas DataFrame"
@@ -218,7 +218,7 @@ class DataFrame:
         max:    Returns array with the maximum value of each numeric column.
                 No parameters required.
         args:   None
-        """
+        """      
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
@@ -269,6 +269,9 @@ class DataFrame:
             ]
         )
 
+    def unique_element(self):
+        return np.array([np.unique(self.df[col]) for col in self.column_names])
+
     @property
     def columns(self):
         """
@@ -298,6 +301,19 @@ class DataFrame:
 
         self.data = d1
         self.column_names = value
+
+    def index(self):
+
+        lst_rows = -1
+        try:
+            lst_rows = self.index_names
+            return lst_rows
+        except Exception as ex:
+            log_traceback(ex)
+
+    @index.setter
+    def index(self, value):
+        self.index_names = value
 
     def get_col_numbers(self, _columns):
         _arr = []
