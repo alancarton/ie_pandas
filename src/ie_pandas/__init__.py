@@ -303,6 +303,7 @@ class DataFrame:
         self.data = d1
         self.column_names = value
 
+    @property
     def index(self):
 
         lst_rows = -1
