@@ -181,6 +181,8 @@ class DataFrame:
                 No parameters required.
         args:   None
         """
+        # return the sum for the numerical features
+        # for non-numerical return none
         return np.array(
             [
                 self.df[col].sum() if col in self.numericals else None
@@ -194,6 +196,8 @@ class DataFrame:
                 No parameters required.
         args:   None
         """
+        # return the median for the numerical features
+        # for non-numerical return none
         return np.array(
             [
                 np.median(self.df[col]) if col in self.numericals else None
@@ -207,6 +211,8 @@ class DataFrame:
                 No parameters required.
         args:   None
         """
+        # return the min for the numerical features
+        # for non-numerical return none
         return np.array(
             [
                 self.df[col].min() if col in self.numericals else None
@@ -220,6 +226,8 @@ class DataFrame:
                 No parameters required.
         args:   None
         """
+        # return the max for the numerical features
+        # for non-numerical return none
         return np.array(
             [
                 self.df[col].max() if col in self.numericals else None
@@ -233,6 +241,8 @@ class DataFrame:
                 No parameters required.
         args:   None
         """
+        # return the mean for the numerical features
+        # for non-numerical return none
         return np.array(
             [
                 np.mean(self.df[col]) if col in self.numericals else None
@@ -380,18 +390,23 @@ class DataFrame:
         color : color or array_like of colors or None, optional
         rwidth : scalar or None, optional
         """
+        # check if cols is list, raise error if not
         if not isinstance(cols, (list,)):
             raise ValueError("The argument cols must be empty or a list")
+        # define histogram function
+        # takes numerical features
 
         def draw_hist(nums):
             fig1, ax1 = plt.subplots()
             ax1.set_title(nums)
             ax1.hist(self.df[nums], bins=bins, color=color, rwidth=rwidth)
 
+        # if cols is not passed, plot all numericals
         if not cols:
             for nums in self.numericals:
                 draw_hist(nums)
-
+        # if cols is passed as a list
+        # then plot only the numericals
         else:
             for nums in cols:
                 if nums in self.numericals:
@@ -409,16 +424,21 @@ class DataFrame:
         """
         if not isinstance(cols, (list,)):
             raise ValueError("The argument cols must be empty or a list")
+        # define boxplot function
+        # takes numerical features
 
         def draw_box(nums):
             fig1, ax1 = plt.subplots()
             ax1.set_title(nums)
             ax1.boxplot(self.df[nums], vert=vert, meanline=meanline)
 
+        # if _boxplot not pass list of columns
+        # then take all the numerical features
         if not cols:
             for nums in self.numericals:
                 draw_box(nums)
-
+        # if specifies columns then check if numerical
+        # and then plot the numericals
         else:
             for nums in cols:
                 if nums in self.numericals:
