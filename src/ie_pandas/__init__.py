@@ -95,6 +95,7 @@ class DataFrame:
         """
         _df = None
         _cols = self.columns
+
         if colnames is None:
             # Return all columns
             _df = self.df
@@ -103,11 +104,11 @@ class DataFrame:
             if not isinstance(colnames, np.ndarray):
                 colnames = np.array(colnames)
 
-            if not type(colnames[0]) is str:
+            if isinstance(colnames[0], str):
+                _cols = colnames
+            else:
                 # Numeric list, so get list as column names.
                 _cols = get_columnnames_by_numbers(self, colnames)
-            else:
-                _cols = colnames
 
             _df = return_filtered_columns(self.df, cols=_cols)
 
