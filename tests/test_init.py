@@ -58,3 +58,35 @@ def test_initialization_array_no_columns():
     df = DataFrame(data=_data)
     # Object Created so Pass Test.
     assert True
+
+
+def test_initialization_array_rows():
+
+    _data = np.array(
+        [
+            [1, 1.3254, False, "R1"],
+            [3, 4.123, True, "R 2"],
+            [3, 1.4, False, "R 3"],
+            [2, 14, False, "R 4"],
+            [12, 41, True, "R5"],
+        ]
+    )
+
+    df = DataFrame(data=_data, dtype="Row")
+    # Object Created so Pass Test.
+    assert True
+
+
+def test_initialization_array_cols():
+    _data = np.array(
+        [
+            [1, 2, 3, 4, 5, 6],
+            [True, False, False, True, True, True],
+            [1.1, 2.2, 3.3, 4.4, 5.5, 6.6],
+            ["a", "b", "c", "d", "e", "f"],
+        ]
+    )
+
+    df = DataFrame(data=_data, dtype="Col")
+    # Object Created so Pass Test.
+    assert True
