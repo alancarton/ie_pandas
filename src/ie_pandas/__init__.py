@@ -1,5 +1,9 @@
 from .datamanagement import _array_to_dict, return_filtered_columns
-from .datamanagement import dict_as_arraytable, _set_string_array
+from .datamanagement import (
+    dict_as_arraytable,
+    _set_string_array,
+    get_columnnames_by_numbers,
+)
 from .datamanagement import _set_data_type
 import matplotlib.pyplot as plt
 import numpy as np
@@ -101,7 +105,7 @@ class DataFrame:
 
             if not type(colnames[0]) is str:
                 # Numeric list, so get list as column names.
-                _cols = get_columnnames_by_numbers(colnames)
+                _cols = get_columnnames_by_numbers(self, colnames)
             else:
                 _cols = colnames
 

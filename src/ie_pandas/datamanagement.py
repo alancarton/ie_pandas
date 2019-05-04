@@ -50,9 +50,7 @@ def return_filtered_columns(data=None, cols=None):
         elif isinstance(cols, str):
             d1[cols] = data.get(cols)
         else:
-            raise ValueError(
-                "Column or List", "Column should be Integer or Integer list."
-            )
+            raise ValueError("Column or List", "Column should be List of Column names.")
 
     return d1
 
@@ -72,5 +70,15 @@ def _array_to_dict(_data, _columns, _transpose=True):
     for arg in range(len(_columns)):
         _arr = _df[arg]
         d[_columns[arg]] = _set_data_type(_arr)
+
+    return d
+
+
+def get_columnnames_by_numbers(df, _columns):
+    _column_names = df.columns
+
+    d = []
+    for _col in _columns:
+        d.append(_column_names[_col])
 
     return d
