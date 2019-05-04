@@ -50,7 +50,7 @@ def return_filtered_columns(data=None, cols=None):
         elif isinstance(cols, str):
             d1[cols] = data.get(cols)
         else:
-            raise ValueError("Column or List", "Column should be List of Column names.")
+            raise ValueError("should be Column or List of Column names.")
 
     return d1
 
