@@ -1,7 +1,7 @@
 # ie_pandas 
 ie_pandas Group Project.
 
-#This is DataFrame Project for MBD Advanced Python course: Group 2
+#This is DataFrame Project for MBD Advanced Python course: Group G
 -	Alan Carton
 -	Leon Junique
 -	Federico Loguercio
